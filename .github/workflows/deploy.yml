@@ -6,6 +6,19 @@ on:
   pull_request:
     branches: [ main ]
 
+# Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+# These permissions are required for the actions/configure-pages, upload-pages-artifact, and deploy-pages actions
+permissions:
+  contents: read      # Required to checkout the repository
+  pages: write        # Required to deploy to GitHub Pages
+  id-token: write     # Required for OIDC authentication
+  actions: read       # Required to read workflow artifacts
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -25,8 +38,14 @@ jobs:
     - name: Build
       run: npm run build
       
+    # Configure GitHub Pages
+    # If Pages is not enabled in repository settings, this will attempt to enable it
+    # Manual setup: Go to Settings > Pages > Source: GitHub Actions
     - name: Setup Pages
       uses: actions/configure-pages@v4
+      with:
+        # Automatically enable Pages if not already configured
+        enablement: true
       
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
@@ -36,14 +55,3 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-
-# Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
