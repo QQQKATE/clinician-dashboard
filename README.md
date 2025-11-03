@@ -25,14 +25,11 @@ npm run build
 
 The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to GitHub Pages on every push to the `main` branch.
 
-**Automatic Setup:**
-The workflow will attempt to automatically enable GitHub Pages if it's not already configured (using `enablement: true` parameter).
-
-**Manual Setup (if automatic enablement fails):**
+**Setup Instructions:**
 1. Push this repo to GitHub
 2. Go to **Settings** > **Pages**
 3. Under **Source**, select **GitHub Actions**
-4. The workflow will automatically trigger on the next push to `main`
+4. The workflow will automatically trigger on the next push to `main` and deploy your site
 
 **Permissions Required:**
 The workflow requires the following permissions (already configured in the workflow file):

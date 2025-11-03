@@ -22,6 +22,9 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - name: Checkout
@@ -39,13 +42,10 @@ jobs:
       run: npm run build
       
     # Configure GitHub Pages
-    # If Pages is not enabled in repository settings, this will attempt to enable it
-    # Manual setup: Go to Settings > Pages > Source: GitHub Actions
+    # Note: GitHub Pages must be manually enabled in repository settings first
+    # Go to Settings > Pages > Source: GitHub Actions
     - name: Setup Pages
       uses: actions/configure-pages@v4
-      with:
-        # Automatically enable Pages if not already configured
-        enablement: true
       
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
