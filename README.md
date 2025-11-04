@@ -22,10 +22,28 @@ npm run build
 ## Deploy
 
 ### GitHub Pages
+
+The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to GitHub Pages on every push to the `main` branch.
+
+**Automatic Setup:**
+The workflow will attempt to automatically enable GitHub Pages if it's not already configured (using `enablement: true` parameter).
+
+**Manual Setup (if automatic enablement fails):**
 1. Push this repo to GitHub
-2. Go to Settings > Pages
-3. Source: GitHub Actions
-4. Select "Node.js" workflow
+2. Go to **Settings** > **Pages**
+3. Under **Source**, select **GitHub Actions**
+4. The workflow will automatically trigger on the next push to `main`
+
+**Permissions Required:**
+The workflow requires the following permissions (already configured in the workflow file):
+- `contents: read` - to checkout the repository
+- `pages: write` - to deploy to GitHub Pages
+- `id-token: write` - for OIDC authentication
+- `actions: read` - to read workflow artifacts
+
+**Viewing Your Site:**
+After successful deployment, your site will be available at:
+`https://<your-username>.github.io/clinician-dashboard/`
 
 ### Vercel
 - Import this repo into Vercel
